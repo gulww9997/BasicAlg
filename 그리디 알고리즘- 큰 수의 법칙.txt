@@ -1,0 +1,20 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+	int N, M, K;
+	cin >> N >> M >> K;
+	int* arr = new int[N];
+	for (int i = 0; i < N; i++)
+		cin >> arr[i];
+
+	sort(arr, arr + N);
+
+	int first = arr[N - 1];
+	int second = arr[N - 2];
+	int count = M % K;
+	int result = first * (M - count) + second * count;
+
+	cout << result;
+}
