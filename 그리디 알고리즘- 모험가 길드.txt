@@ -1,0 +1,24 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int scare[100000];
+
+int main() {
+	int N, count = 0, group = 0;
+	cin >> N;
+	for (int i = 0; i < N; i++)
+		cin >> scare[i];
+
+	sort(scare, scare + N);
+
+	for (int i = 0; i < N; i++) {
+		count += 1;
+		if (count >= scare[i]) {
+			group += 1;
+			count = 0;
+		}
+	}
+
+	cout << group;
+}
