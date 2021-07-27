@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int rl[] = { -2,-1,1,2,-2,-1,2,1 };
+int ud[] = { -1,-2,-2,-1,1.2,1,2 };
+
+int main() {
+	string s;
+	cin >> s;
+	int column = s[1] - '0';
+	int row = s[0] - 'a' + 1;
+	int count = 0;
+
+	for (int i = 0; i < 8; i++) {
+		int nextColumn = column + rl[i];
+		int nextRow = row + ud[i];
+
+		if (nextColumn >= 1 && nextRow >= 1 && nextColumn <= 8 && nextRow <= 8)
+			count++;
+	}
+	cout << count;
+}
