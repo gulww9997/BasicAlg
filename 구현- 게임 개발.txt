@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+int dx[] = {-1, 0, 1, 0 };
+int dy[] = { 0, 1, 0, -1 };
+int direction[] = { 0, 1, 2, 3 };
+
+void turnLeft(int &d) {
+	d -= 1;
+	if (d == -1)
+		d = 3;
+}
+
+int main() {
+	int N, M, A, B, d;
+	cin >> N >> M;
+	cin >> A >> B >> d;
+
+	int** map = new int* [M]; // 전체 맵 생성, 입력
+	for (int i = 0; i < M; i++)
+		map[i] = new int[N];
+
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++)
+			cin >> map[i][j];
+
+	int** visit = new int* [M]; // 방문한 칸을 1로 표시하는 맵 생성, 0으로 초기화
+	for (int i = 0; i < M; i++)
+		visit[i] = new int[N];
+
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++)
+			visit[i][j] = 0;
+
+	visit[A][B] = 1;
+	int count = 1; // 방문한 칸 수
+	int turn = 0; // 회전한 횟수
+
+	while (true) {
+		turnLeft(d);
+		int newA = A + dx[d];
+		int newB = B + dy[d];
+		// 회전한 이후 정면이 육지이고 가보지 않은 곳이라면
+		if (map[newA][newB] == 0 && visit[newA][newB] == 0) {
+			count += 1;
+			visit[newA][newB] = 1;
+			A = newA;
+			B = newB;
+			turn = 0;
+			continue;
+		}
+		else // 회전한 이후 정면이 바다거나 가본적 있으면
+			turn += 1;
+
+		if (turn == 4) { // 4방향 모두 갈 수 없는 경우
+			newA = A - dx[d];
+			newB = B - dy[d];
+			if (map[newA][newB] == 0) {
+				A = newA;
+				B = newB;
+			}
+			else
+				break;
+			turn = 0;
+		}
+	}
+	cout << count;
+}
