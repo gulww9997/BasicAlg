@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int graph[1001][1001];
+int N, M;
+
+bool dfs(int x,int y) {
+	if (x <= -1 || x >= N || y <= -1 || y >= M)
+		return false;
+
+	if (graph[x][y] == 0) { // 현재 노드를 방문하지 않았다면
+		graph[x][y] = 1; // 노드 방문 처리
+
+		// 상, 하, 좌, 우 재귀적으로 호출
+		dfs(x + 1, y);
+		dfs(x - 1, y);
+		dfs(x, y + 1);
+		dfs(x, y - 1);
+		return true;
+	}
+	return false;
+}
+
+int main() {
+	cin >> N >> M;
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < M; j++)
+			scanf("%1d", &graph[i][j]); // 공백없이 1문자만 입력받음
+	
+	int count = 0;
+
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < M; j++)
+			if (dfs(i, j))
+				count += 1;
+
+	cout << count;
+}
