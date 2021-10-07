@@ -1,0 +1,22 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int N;
+int K[1001];
+int dp[1001];
+
+int main() { // Bottom-up 방식
+	cin >> N;
+	for (int i = 0; i < N; i++)
+		cin >> K[i];
+
+	dp[0] = K[0];
+	dp[1] = max(K[0], K[1]);
+
+	for (int i = 2; i <= N; i++) {
+		dp[i] = max(dp[i - 1], dp[i - 2] + K[i]);
+	}
+
+	cout << dp[N];
+}
